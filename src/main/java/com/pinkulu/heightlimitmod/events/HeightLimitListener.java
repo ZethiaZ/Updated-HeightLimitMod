@@ -16,15 +16,13 @@ import net.minecraft.util.BlockPos;
 import net.minecraftforge.event.world.WorldEvent;
 import org.apache.commons.lang3.ArrayUtils;
 
-import static com.pinkulu.heightlimitmod.events.ForgeEventListener.placedBlocks;
-
 public class HeightLimitListener {
     public static boolean shouldPlaySound;
     public static boolean editingHUD = false;
     public static boolean joinedOnce = false;
 
 
-    //List of sounds https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/mapping-and-modding-tutorials/2213619-1-8-all-playsound-sound-arguments
+    // List of sounds https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/mapping-and-modding-tutorials/2213619-1-8-all-playsound-sound-arguments
     public static void PlaySound() {
         if (Minecraft.getMinecraft().thePlayer == null || Minecraft.getMinecraft().theWorld == null) return;
         switch (HeightLimitModConfig.soundToPlay) {
@@ -88,7 +86,7 @@ public class HeightLimitListener {
     private void placeBlockPacket(ReceivePacketEvent event) {
         if (event.packet.toString().contains("S23PacketBlockChange")) {
             S23PacketBlockChange packetBlockChange = (S23PacketBlockChange) event.packet;
-             if (!HeightLimitUtil.shouldRender()) return;
+            if (!HeightLimitUtil.shouldRender()) return;
             if (!packetBlockChange.getBlockState().getBlock().getLocalizedName().toLowerCase().contains("wool")) {
                 ForgeEventListener.placedBlocks = ArrayUtils.removeElement(ForgeEventListener.placedBlocks, packetBlockChange.getBlockPosition());
                 return;
@@ -114,13 +112,13 @@ public class HeightLimitListener {
             ForgeEventListener.placedBlocks = new BlockPos[0];
         }
 
-        }
+    }
 
     @Subscribe
     private void onTick(TickEvent event) {
         if (event.stage == Stage.START) {
             if (Minecraft.getMinecraft().thePlayer == null || Minecraft.getMinecraft().theWorld == null) return;
-            if(!HeightLimitUtil.shouldRender()) return;
+            if (!HeightLimitUtil.shouldRender()) return;
             int limit = (int) Math.ceil(HeightLimitUtil.heightLimit(
                     Math.floor(Minecraft.getMinecraft().thePlayer.posX),
                     Math.floor(Minecraft.getMinecraft().thePlayer.posZ),
@@ -156,9 +154,6 @@ public class HeightLimitListener {
         if (event.screen.toString().contains("HudGui")) editingHUD = true;
         if (event.screen.toString().contains("OneConfigGui")) editingHUD = true;
     }
-
-
-
 
 
 }

@@ -12,7 +12,7 @@ plugins {
     id("org.polyfrost.defaults.java")
     id("org.polyfrost.defaults.loom")
     id("com.github.johnrengelman.shadow")
-    id("net.kyori.blossom") version "1.3.1"
+    id("net.kyori.blossom") version "1.3.2"
     id("signing")
     java
 }
@@ -62,14 +62,6 @@ loom {
             }
         }
     }
-    // Configures the mixins if we are building for forge, useful for when we are dealing with cross-platform projects.
-    if (project.platform.isForge) {
-        forge {
-            mixinConfig("mixins.${mod_id}.json")
-        }
-    }
-    // Configures the name of the mixin "refmap" using an experimental loom api.
-    mixin.defaultRefmapName.set("mixins.${mod_id}.refmap.json")
 }
 
 // Creates the shade/shadow configuration, so we can include libraries inside our mod, rather than having to add them separately.
@@ -95,15 +87,12 @@ dependencies {
     // Adds the OneConfig library, so we can develop with it.
     modCompileOnly("cc.polyfrost:oneconfig-$platform:0.2.2-alpha+")
 
-    modRuntimeOnly("me.djtheredstoner:DevAuth-forge-legacy:1.1.2")
+    modRuntimeOnly("me.djtheredstoner:DevAuth-forge-legacy:1.2.2")
 
     // If we are building for legacy forge, includes the launch wrapper with `shade` as we configured earlier.
     if (platform.isLegacyForge) {
-        compileOnly("org.spongepowered:mixin:0.7.11-SNAPSHOT")
         shade("cc.polyfrost:oneconfig-wrapper-launchwrapper:1.0.0-beta+")
     }
-
-    include("com.squareup.okhttp3:okhttp:3.9.1")
 }
 
 tasks {
@@ -126,7 +115,7 @@ tasks {
         inputs.property("java_level", compatLevel)
         inputs.property("version", mod_version)
         inputs.property("mcVersionStr", project.platform.mcVersionStr)
-        filesMatching(listOf("mcmod.info", "mixins.${mod_id}.json", "mods.toml")) {
+        filesMatching(listOf("mcmod.info", "mods.toml")) {
             expand(
                 mapOf(
                     "id" to mod_id,
@@ -186,7 +175,6 @@ tasks {
                 "ModSide" to "CLIENT", // We aren't developing a server-side mod, so this is fine.
                 "ForceLoadAsMod" to true, // We want to load this jar as a mod, so we force Forge to do so.
                 "TweakOrder" to "0", // Makes sure that the OneConfig launch wrapper is loaded as soon as possible.
-                "MixinConfigs" to "mixins.${mod_id}.json", // We want to use our mixin configuration, so we specify it here.
                 "TweakClass" to "cc.polyfrost.oneconfig.loader.stage0.LaunchWrapperTweaker" // Loads the OneConfig launch wrapper.
             )
         }

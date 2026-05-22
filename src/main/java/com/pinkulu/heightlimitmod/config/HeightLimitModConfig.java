@@ -17,7 +17,6 @@ public class HeightLimitModConfig extends Config {
 
     @Switch(
             name = "Enable Height Overlay",
-            category = "General",
             description = "show an overlay if a block is placed at the height limit",
             subcategory = "Height Overlay"
     )
@@ -25,32 +24,27 @@ public class HeightLimitModConfig extends Config {
 
     @Color(
             name = "Height Overlay Color",
-            category = "General",
             subcategory = "Height Overlay"
     )
     public static OneColor heightOverlayColor = new OneColor(255, 0, 128, 144);
+
     @Dropdown(
             name = "Height Overlay Style",
-            category = "General",
             options = {"Solid", "Outline", "X"},
             subcategory = "Height Overlay"
-
     )
     public static int heightOverlayStyle = 0;
 
     @Switch(
             name = "Dynamic Limit Calculation",
-            category = "General",
             description = "Calculate the actual height limit of the map, as its a sphere, and not always static",
             subcategory = "Dynamic Limit Calculation"
-
     )
     public static boolean dynamicLimit = true;
 
     @Info(
             type = InfoType.WARNING,
             text = "Dynamic limit calculation may not always be accurate, and is completely disabled in skywars",
-            category = "General",
             subcategory = "Dynamic Limit Calculation",
             size = 2
     )
@@ -102,31 +96,36 @@ public class HeightLimitModConfig extends Config {
     @Dropdown(name = "Sound To Play", options = {"Ding!", "Iron Golem Abuse", "Blaze Abuse", "Anvil Land",
             "Horse Dies :(", "Ghast Yells", "Guardian Abuse", "Cat Meows", "Dog Barks", "BOOOM!", "Custom Sound(Advanced)"}, category = "Sound")
     public static int soundToPlay = 0;
+
     @Checkbox(name = "Should Spam Sound", category = "Sound")
     public static boolean shouldSpamSound = false;
+
     @Info(text = "For custom sounds, go to \"Sound List\" in Information tab", type = InfoType.INFO, category = "Sound")
     public static String info;
+
     @Info(text = "Always check the \"Test Sound\" button, after setting a custom sound", type = InfoType.WARNING, category = "Sound")
     public static String info2;
+
     @Text(
             name = "Custom Sound",
             category = "Sound",
             placeholder = "example: dig.glass"
     )
     public static String soundName;
+
     @Button(
             name = "Test Sound",
             text = "Click Here",
             category = "Sound"
     )
     Runnable testSound = HeightLimitListener::PlaySound;
+
     @Button(
             name = "Pinkulu's Website",
             text = "Click Here",
             category = "Information"
     )
     Runnable pinkulu = () -> UDesktop.browse(URI.create("https://pinkulu.com"));
-
 
     @Button(
             name = "Support Discord Server",
@@ -135,7 +134,6 @@ public class HeightLimitModConfig extends Config {
     )
     Runnable discord = () -> UDesktop.browse(URI.create("https://inv.wtf/pink"));
 
-
     @Button(
             name = "Sound List",
             text = "Click Here",
@@ -143,7 +141,6 @@ public class HeightLimitModConfig extends Config {
     )
     Runnable soundlist = () ->
             UDesktop.browse(URI.create("https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/mapping-and-modding-tutorials/2213619-1-8-all-playsound-sound-arguments"));
-
 
     public HeightLimitModConfig() {
         super(new Mod(HeightLimitMod.NAME, ModType.HYPIXEL), HeightLimitMod.MODID + ".json");

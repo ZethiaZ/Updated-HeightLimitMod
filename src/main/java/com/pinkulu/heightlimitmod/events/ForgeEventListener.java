@@ -9,20 +9,18 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.commons.lang3.ArrayUtils;
 import org.lwjgl.opengl.GL11;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import static com.pinkulu.heightlimitmod.config.HeightLimitModConfig.enableHeightOverlay;
 import static com.pinkulu.heightlimitmod.config.HeightLimitModConfig.heightOverlayColor;
 
 public class ForgeEventListener {
     public static BlockPos[] placedBlocks = new BlockPos[0];
+
     @SubscribeEvent
     public void onRenderWorldLast(RenderWorldLastEvent event) {
-        if(!enableHeightOverlay) return;
+        if (!enableHeightOverlay) return;
         if (placedBlocks == null) return;
         if (placedBlocks.length == 0) return;
-        if(!HeightLimitUtil.shouldRender()) return;
+        if (!HeightLimitUtil.shouldRender()) return;
 
         GL11.glEnable(GL11.GL_LINE_SMOOTH);
         GL11.glDisable(GL11.GL_TEXTURE_2D);
@@ -65,7 +63,7 @@ public class ForgeEventListener {
         GL11.glDisable(GL11.GL_LINE_SMOOTH);
     }
 
-    public void renderSolid(double x, double y, double z){
+    public void renderSolid(double x, double y, double z) {
         // top
         GL11.glBegin(GL11.GL_QUADS);
         GL11.glVertex3d(x, y + 1 + 0.01, z + 1);
@@ -101,7 +99,7 @@ public class ForgeEventListener {
         // left
         GL11.glBegin(GL11.GL_QUADS);
         GL11.glVertex3d(x - 0.01, y, z);
-        GL11.glVertex3d(x - 0.01 , y, z + 1);
+        GL11.glVertex3d(x - 0.01, y, z + 1);
         GL11.glVertex3d(x - 0.01, y + 1, z + 1);
         GL11.glVertex3d(x - 0.01, y + 1, z);
         GL11.glEnd();
@@ -115,11 +113,11 @@ public class ForgeEventListener {
         GL11.glEnd();
     }
 
-    public void renderOutline(double x, double y, double z){
+    public void renderOutline(double x, double y, double z) {
         GL11.glBegin(GL11.GL_LINE_LOOP);
         GL11.glVertex3d(x, y, z);
         GL11.glVertex3d(x, y, z + 1 + 0.01);
-        GL11.glVertex3d(x + 1 , y, z + 1 + 0.01);
+        GL11.glVertex3d(x + 1, y, z + 1 + 0.01);
         GL11.glVertex3d(x + 1, y, z);
         GL11.glEnd();
         GL11.glBegin(GL11.GL_LINE_LOOP);
@@ -140,7 +138,7 @@ public class ForgeEventListener {
         GL11.glEnd();
     }
 
-    public void renderX(double x, double y, double z){
+    public void renderX(double x, double y, double z) {
         // render x on all sides
 
         // top

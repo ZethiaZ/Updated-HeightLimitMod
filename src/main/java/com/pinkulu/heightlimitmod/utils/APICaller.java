@@ -18,7 +18,7 @@ public class APICaller {
         heightCache = null;
         Multithreading.runAsync(() -> {
             try {
-                JsonElement json = NetworkUtils.getJsonElement("https://maps.pinkulu.com/trans-rights-are-human-rights.json");
+                JsonElement json = NetworkUtils.getJsonElement("https://data.polyfrost.org/hlm/trans-rights-are-human-rights.json");
                 if (json != null) {
                     heightCache = (JsonArray) json;
                 }
@@ -34,7 +34,7 @@ public class APICaller {
     public static void getVersion() {
         Multithreading.runAsync(() -> {
             try {
-                final JsonElement json = NetworkUtils.getJsonElement("https://maps.pinkulu.com/version.json");
+                final JsonElement json = NetworkUtils.getJsonElement("https://data.polyfrost.org/hlm/version.json");
                 if (json != null) {
                     final JsonObject object = json.getAsJsonObject();
                     latest_version = object.get("Version").getAsString();

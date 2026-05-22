@@ -7,14 +7,11 @@ import cc.polyfrost.oneconfig.utils.hypixel.LocrawUtil;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.pinkulu.heightlimitmod.config.HeightLimitModConfig;
-import com.pinkulu.heightlimitmod.events.ForgeEventListener;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.BlockPos;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
-
 
 public class HeightLimitUtil {
     public static JsonObject mapCache;
@@ -80,17 +77,17 @@ public class HeightLimitUtil {
         });
     }
 
-    public static boolean shouldUpdate(String latestVersion, String currentVersion){
-        if(latestVersion.contains("-")){
+    public static boolean shouldUpdate(String latestVersion, String currentVersion) {
+        if (latestVersion.contains("-")) {
             latestVersion = latestVersion.substring(0, latestVersion.indexOf("-"));
         }
-        if(currentVersion.contains("-")){
+        if (currentVersion.contains("-")) {
             currentVersion = currentVersion.substring(0, currentVersion.indexOf("-"));
         }
         String[] latestVersionArray = latestVersion.split("\\.");
         String[] currentVersionArray = currentVersion.split("\\.");
-        for(int i = 0; i < latestVersionArray.length; i++){
-            if(Integer.parseInt(currentVersionArray[i]) < Integer.parseInt(latestVersionArray[i])){
+        for (int i = 0; i < latestVersionArray.length; i++) {
+            if (Integer.parseInt(currentVersionArray[i]) < Integer.parseInt(latestVersionArray[i])) {
                 return true;
             }
         }
@@ -126,8 +123,7 @@ public class HeightLimitUtil {
 
 
     public static double heightLimit(double x, double z, double radius) {
-        if(getMapType().toLowerCase().contains("skywars") || getBuildRadius() == -1 || getLimit() == 0 || !HeightLimitModConfig.dynamicLimit)
-        {
+        if (getMapType().toLowerCase().contains("skywars") || getBuildRadius() == -1 || getLimit() == 0 || !HeightLimitModConfig.dynamicLimit) {
             return getLimit();
         }
         double distance = Math.sqrt(Math.pow(x, 2) + Math.pow(z, 2));
@@ -137,9 +133,6 @@ public class HeightLimitUtil {
         }
         return 70 + Math.sqrt(underRoot) > getLimit() ? getLimit() : 70 + Math.sqrt(underRoot);
     }
-
-
-
 
 
 }
